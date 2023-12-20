@@ -4,7 +4,7 @@ import employeeServices from '../services/EmployeeServiceS';
 const employeeController = {
 	handleCreateEmloyee: async (req, res) => {
 		try {
-			// const { status, message, data } = await employeeServices.createEmloyee(req.body);
+			const { status, message, data } = await employeeServices.createEmloyee(req.body);
 			res.status(HttpStatusCode.OK).json(req.body);
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
@@ -12,7 +12,7 @@ const employeeController = {
 	},
 	handleGetAllEmloyee: async (req, res) => {
 		try {
-			// const { status, message, data } = await employeeServices.getAllEmloyee();
+			const { status, message, data } = await employeeServices.getAllEmloyee();
 			res.status(HttpStatusCode.OK).json('get');
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
@@ -20,7 +20,7 @@ const employeeController = {
 	},
 	handleUpdateEmloyee: async (req, res) => {
 		try {
-			// const { status, message, data } = await employeeServices.getAllEmloyee(req.body, req.params.idEmployee);
+			const { status, message, data } = await employeeServices.getAllEmloyee(req.body, req.params.idEmployee);
 			res.status(HttpStatusCode.OK).json(`${req.params.idEmployee} update`);
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
