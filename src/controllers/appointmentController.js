@@ -1,10 +1,10 @@
 import HttpStatusCode from '../helper/HttpStatusCode';
-import employeeServices from '../services/employeeServices';
+import appointmentServices from '../services/appointmentService';
 
-const employeeController = {
-	handleCreateEmloyee: async (req, res) => {
+const appointmentController = {
+	handleCreateAppointment: async (req, res) => {
 		try {
-			const { status, message } = await employeeServices.createNewEmloyee(req.body);
+			const { status, message } = await appointmentServices.createAppointment(req.body);
 			if (status) {
 				res.status(HttpStatusCode.CREATED).json({ message: message });
 			} else {
@@ -14,13 +14,13 @@ const employeeController = {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
-	handleGetAllEmloyee: async (req, res) => {
+	handleGetAllAppointment: async (req, res) => {
 		try {
-			const { status, message, employees } = await employeeServices.getAllEmloyees();
+			const { status, message, appointments } = await appointmentServices.getAllAppointment();
 			if (status) {
 				res.status(HttpStatusCode.OK).json({
 					message: message,
-					data: employees,
+					data: appointments,
 				});
 			} else {
 				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
@@ -29,9 +29,9 @@ const employeeController = {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
-	handleUpdateEmloyee: async (req, res) => {
+	handleUpdateAppointment: async (req, res) => {
 		try {
-			const { status, message } = await employeeServices.updateEmloyeeById(req.params.employeeId, req.body);
+			const { status, message } = await appointmentServices.updateAppointmentById(req.params.appointmentId, req.body);
 			if (status) {
 				res.status(HttpStatusCode.OK).json({ message });
 			} else {
@@ -41,9 +41,9 @@ const employeeController = {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
-	handleDeleteEmloyee: async (req, res) => {
+	handleDeleteAppointment: async (req, res) => {
 		try {
-			const { status, message } = await employeeServices.deleteEmployeeById(req.params.employeeId);
+			const { status, message } = await appointmentServices.deleteAppointmentById(req.params.appointmentId);
 			if (status) {
 				res.status(HttpStatusCode.OK).json({ message });
 			} else {
@@ -54,4 +54,4 @@ const employeeController = {
 		}
 	},
 };
-export default employeeController;
+export default appointmentController;

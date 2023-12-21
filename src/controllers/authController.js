@@ -41,10 +41,13 @@ const authController = {
 	},
 	handleTestSendMail: async (req, res) => {
 		try {
-			await sendMail({
-				subject: "1123123",
-				body: "cvlxckjvlxck"
-			}, 'anbadao12345@gmail.com');
+			await sendMail(
+				{
+					subject: '1123123',
+					body: 'cvlxckjvlxck',
+				},
+				'ilovepokemon147@gmail.com',
+			);
 			res.status(HttpStatusCode.OK).json('sendmail');
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
