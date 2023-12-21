@@ -2,31 +2,26 @@ import db from '../models/index';
 
 // CRUD
 const employeeServices = {
-	createEmloyee: async (data) => {
+	createNewEmloyee: async (data) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const employees = await db.Employee.findOne({ where: { name: data.name } });
-				if (!employees) {
-					let newEmployee = await db.Employee.create({
-						name: data.name,
-						description: data.description,
-						position: data.position,
-						image: data.image,
-					});
-					if (newEmployee) {
-						resolve({ status: true, message: 'Create new employee successfully!' });
-					} else {
-						resolve({ status: false, message: 'Create employee failed!' });
-					}
+				let newEmployee = await db.Employee.create({
+					name: data.name,
+					description: data.description,
+					position: data.position,
+					image: data.image,
+				});
+				if (newEmployee) {
+					resolve({ status: true, message: 'Create new employee successfully!' });
 				} else {
-					resolve({ status: false, message: 'Employee already exists!' });
+					resolve({ status: false, message: 'Create employee failed!' });
 				}
 			} catch (error) {
 				reject(error);
 			}
 		});
 	},
-	getAllEmloyee: async () => {
+	getAllEmloyees: async () => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let employees = await db.Employee.findAll({ atributes: ['id', 'name', 'description', 'position', 'image'] });
@@ -40,12 +35,18 @@ const employeeServices = {
 			}
 		});
 	},
-	updateEmloyee: async (data, idEmployee) => {
+	updateEmloyeeById: async (employeeId, data) => {
 		return new Promise(async (resolve, reject) => {
 			try {
 				let isUpdate = await db.Employee.update(
-					{ name: data.name, description: data.description, position: data.position, image: data.image },
-					{ where: { id: id } },
+					{
+						name: data.name,
+						description: data.description,
+						position: data.position,
+						image: data.image,
+						updatedAt: new Date(),
+					},
+					{ where: { id: employeeId } },
 				);
 				if (isUpdate) {
 					resolve({ status: true, message: 'Update employee successfully!' });
@@ -57,11 +58,10 @@ const employeeServices = {
 			}
 		});
 	},
-	deleteEmloyee: async (idEmployee) => {
+	deleteEmployeeById: async (employeeId) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let isDelete = await db.Employee.destroy({ where: { id: id } });
-				let deleteEmployee = await db.Employee.destroy({ where: { employeeId: id } });
+				const isDelete = await db.Employee.destroy({ where: { id: employeeId } });
 				if (isDelete) {
 					resolve({ status: true, message: 'Delete employee successfully!' });
 				} else {

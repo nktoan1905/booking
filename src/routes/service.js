@@ -7,7 +7,7 @@ router.get('/', serviceController.handleGetAllService);
 // create
 router.post('/register', serviceController.handleCreateService);
 // update
-router.put('/:idService', serviceController.handleUpdateService);
+router.put('/:serviceId', serviceController.handleUpdateServiceId);
 // delete
-router.delete('/:idService', serviceController.handleDeleteService);
+router.delete('/:serviceId', serviceController.handleDeleteServiceId);
 export default router;

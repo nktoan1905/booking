@@ -31,19 +31,24 @@ const serviceServices = {
 				if (services.length < 0) {
 					resolve({ status: false, message: 'Get all services failed!' });
 				} else {
-					resolve({ status: true, message: 'Get all services successfully!', employees: employees });
+					resolve({ status: true, message: 'Get all services successfully!', services: services });
 				}
 			} catch (error) {
+				console.log(error);
 				reject(error);
 			}
 		});
 	},
-	updateService: async (data, idService) => {
+	updateServiceById: async (serviceId, data) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let isUpdate = await db.Services.update(
-					{ name: data.name, description: data.description },
-					{ where: { id: id } },
+				const isUpdate = await db.Service.update(
+					{
+						name: data.name,
+						description: data.description,
+						updatedAt: new Date(),
+					},
+					{ where: { id: serviceId } },
 				);
 				if (isUpdate) {
 					resolve({ status: true, message: 'Update service successfully!' });
@@ -55,11 +60,10 @@ const serviceServices = {
 			}
 		});
 	},
-	deleteService: async (idService) => {
+	deleteServiceById: async (serviceId) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let isDelete = await db.Service.destroy({ where: { id: id } });
-				let deleteService = await db.Service.destroy({ where: { serviceId: id } });
+				const isDelete = await db.Service.destroy({ where: { id: serviceId } });
 				if (isDelete) {
 					resolve({ status: true, message: 'Delete service successfully!' });
 				} else {

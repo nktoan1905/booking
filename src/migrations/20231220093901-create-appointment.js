@@ -24,7 +24,7 @@ module.exports = {
 			generic: {
 				type: Sequelize.STRING,
 			},
-			appontmentTime: {
+			appointmentTime: {
 				type: Sequelize.DATE,
 			},
 			service: {

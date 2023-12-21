@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 			phoneNumber: DataTypes.STRING,
 			email: DataTypes.STRING,
 			generic: DataTypes.STRING,
-			appontmentTime: DataTypes.DATE,
+			appointmentTime: DataTypes.DATE,
 			service: DataTypes.STRING,
 		},
 		{

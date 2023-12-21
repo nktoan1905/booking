@@ -13,7 +13,7 @@ const appointmentServices = {
 						phoneNumber: data.phoneNumber,
 						email: data.email,
 						generic: data.generic,
-						appointmentsTime: data.appointmentTime,
+						appointmentTime: data.appointmentTime,
 						service: data.service,
 					});
 					if (newAppointment) {
@@ -45,20 +45,21 @@ const appointmentServices = {
 			}
 		});
 	},
-	updateAppointment: async (data, idAppointment) => {
+	updateAppointmentById: async (appointmentId, data) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let isUpdate = await db.Appointment.update(
+				const isUpdate = await db.Appointment.update(
 					{
 						name: data.name,
 						address: data.address,
 						phoneNumber: data.phoneNumber,
 						email: data.email,
 						generic: data.generic,
-						appointmentsTime: data.appointmentTime,
+						appointmentTime: data.appointmentTime,
 						service: data.service,
+						updatedAt: new Date(),
 					},
-					{ where: { id: id } },
+					{ where: { id: appointmentId } },
 				);
 				if (isUpdate) {
 					resolve({ status: true, message: 'Update appointment successfully!' });
@@ -70,15 +71,14 @@ const appointmentServices = {
 			}
 		});
 	},
-	deleteAppointment: async (idAppointment) => {
+	deleteAppointmentById: async (appointmentId) => {
 		return new Promise(async (resolve, reject) => {
 			try {
-				let isDelete = await db.Appointment.destroy({ where: { id: id } });
-				let deleteAppointment = await db.Appointment.destroy({ where: { appointmentId: id } });
+				const isDelete = await db.Appointment.destroy({ where: { id: appointmentId } });
 				if (isDelete) {
-					resolve({ status: true, message: 'Delete appointment successfully!' });
+					resolve({ status: true, message: 'Delete service successfully!' });
 				} else {
-					resolve({ status: false, message: 'Delete appointment failed!' });
+					resolve({ status: false, message: 'Delete service failed!' });
 				}
 			} catch (error) {
 				reject(error);

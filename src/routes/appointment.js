@@ -7,7 +7,7 @@ router.get('/', appointmentController.handleGetAllAppointment);
 // create
 router.post('/register', appointmentController.handleCreateAppointment);
 // update
-router.put('/:idAppointment', appointmentController.handleUpdateAppointment);
+router.put('/:appointmentId', appointmentController.handleUpdateAppointment);
 // delete
-router.delete('/:idAppointment', appointmentController.handleDeleteAppointment);
+router.delete('/:appointmentId', appointmentController.handleDeleteAppointment);
 export default router;

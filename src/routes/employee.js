@@ -7,7 +7,7 @@ router.get('/', employeeController.handleGetAllEmloyee);
 // create
 router.post('/register', employeeController.handleCreateEmloyee);
 // update
-router.put('/:idEmployee', employeeController.handleUpdateEmloyee);
+router.put('/:employeeId', employeeController.handleUpdateEmloyee);
 // delete
-router.delete('/:idEmployee', employeeController.handleDeleteEmloyee);
+router.delete('/:employeeId', employeeController.handleDeleteEmloyee);
 export default router;

@@ -4,31 +4,51 @@ import appointmentServices from '../services/appointmentService';
 const appointmentController = {
 	handleCreateAppointment: async (req, res) => {
 		try {
-			const { status, message, data } = await appointmentServices.createAppointment(req.body);
-			res.status(HttpStatusCode.OK).json(req.body);
+			const { status, message } = await appointmentServices.createAppointment(req.body);
+			if (status) {
+				res.status(HttpStatusCode.CREATED).json({ message: message });
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message: message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
 	handleGetAllAppointment: async (req, res) => {
 		try {
-			const { status, message, data } = await appointmentServices.getAllAppointment();
-			res.status(HttpStatusCode.OK).json('get');
+			const { status, message, appointments } = await appointmentServices.getAllAppointment();
+			if (status) {
+				res.status(HttpStatusCode.OK).json({
+					message: message,
+					data: appointments,
+				});
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
 	handleUpdateAppointment: async (req, res) => {
 		try {
-			const { status, message, data } = await appointmentServices.getAllAppointment(req.body, req.params.idappointment);
-			res.status(HttpStatusCode.OK).json(`${req.params.idappointment} update`);
+			const { status, message } = await appointmentServices.updateAppointmentById(req.params.appointmentId, req.body);
+			if (status) {
+				res.status(HttpStatusCode.OK).json({ message });
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
 	handleDeleteAppointment: async (req, res) => {
 		try {
-			res.status(HttpStatusCode.OK).json(`${req.params.idappointment} delete`);
+			const { status, message } = await appointmentServices.deleteAppointmentById(req.params.appointmentId);
+			if (status) {
+				res.status(HttpStatusCode.OK).json({ message });
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}

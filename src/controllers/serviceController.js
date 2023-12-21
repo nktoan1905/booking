@@ -4,31 +4,51 @@ import serviceServices from '../services/serviceServices';
 const serviceController = {
 	handleCreateService: async (req, res) => {
 		try {
-			const { status, message, data } = await serviceServices.createService(req.body);
-			res.status(HttpStatusCode.OK).json(req.body);
+			const { status, message } = await serviceServices.createService(req.body);
+			if (status) {
+				res.status(HttpStatusCode.CREATED).json({ message: message });
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message: message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
 	handleGetAllService: async (req, res) => {
 		try {
-			const { status, message, data } = await serviceServices.getAllService();
-			res.status(HttpStatusCode.OK).json('get');
+			const { status, message, services } = await serviceServices.getAllService();
+			if (status) {
+				res.status(HttpStatusCode.OK).json({
+					message: message,
+					data: services,
+				});
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
-	handleUpdateService: async (req, res) => {
+	handleUpdateServiceId: async (req, res) => {
 		try {
-			const { status, message, data } = await serviceServices.getAllService(req.body, req.params.idService);
-			res.status(HttpStatusCode.OK).json(`${req.params.idService} update`);
+			const { status, message } = await serviceServices.updateServiceById(req.params.serviceId, req.body);
+			if (status) {
+				res.status(HttpStatusCode.OK).json({ message });
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
 	},
-	handleDeleteService: async (req, res) => {
+	handleDeleteServiceId: async (req, res) => {
 		try {
-			res.status(HttpStatusCode.OK).json(`${req.params.idService} delete`);
+			const { status, message } = await serviceServices.deleteServiceById(req.params.serviceId);
+			if (status) {
+				res.status(HttpStatusCode.OK).json({ message });
+			} else {
+				res.status(HttpStatusCode.BAD_REQUEST).json({ message });
+			}
 		} catch (error) {
 			res.status(HttpStatusCode.BAD_REQUEST).json(error);
 		}
